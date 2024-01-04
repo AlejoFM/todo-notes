@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Notes extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'content', 'category_id', 'archived'];
+    protected $fillable = ['title', 'content', 'categories_id', 'archived'];
 
     protected $hidden = ['created_at', 'updated_at'];
 
     public function Categories(){
-        return $this->hasMany(Categories::class, 'id');
+        return $this->belongsToMany(Categories::class, 'note_category', 'notes_id', 'category_id');
     }
 }

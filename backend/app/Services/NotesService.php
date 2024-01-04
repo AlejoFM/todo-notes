@@ -30,7 +30,7 @@ class NotesService{
         $validator = Validator::make($data, [
             'title' => 'required',
             'content' => 'required',
-            'category_id' => 'required',
+            'categories_id' => 'required',
         ]);
 
         if ($validator->fails()){
@@ -43,7 +43,7 @@ class NotesService{
         $validator = Validator::make($data, [
             'title' => 'required',
             'content' => 'required',
-            'category_id' => 'required'
+            'categories_id' => 'required'
         ]);
         if ($validator->fails()){
             throw new InvalidArgumentException($validator->errors()->first());
@@ -77,6 +77,9 @@ class NotesService{
     }
     public function listUnActiveNote(){
         return  $this->notesRepository->listUnActiveNote();
+    }
+    public function filterNotes($category_id){
+        return  $this->notesRepository->filterNotes($category_id);
     }
 }
 

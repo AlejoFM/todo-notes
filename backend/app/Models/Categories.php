@@ -10,6 +10,6 @@ class Categories extends Model
     use HasFactory;
 
     public function Notes(){
-        return $this->belongsToMany(Notes::class, 'notes');
+        return $this->belongsToMany(Notes::class,'note_category', 'category_id', 'notes_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Categories;
 use App\Models\Notes;
 use InvalidArgumentException;
 
@@ -29,9 +30,13 @@ class NotesRepository{
         $notes = new $this->notes;
         $notes->title = $data['title'];
         $notes->content = $data['content'];
-        $notes->category_id = $data['category_id'];
+        $notes->categories_id = $data['categories_id'];
 
         $notes->save();
+        $notes->categories()->attach($data['categories_id']);
+
+
+
         return $notes->fresh();
     }
 
@@ -45,7 +50,7 @@ class NotesRepository{
 
         $notes->title = $data['title'];
         $notes->content = $data['content'];
-        $notes->category_id = $data['category_id'];
+        $notes->categories_id = $data['categories_id'];
 
         $notes->update();
         return $notes->fresh();
@@ -89,6 +94,15 @@ class NotesRepository{
     public function listUnActiveNote(){
         $notes = Notes::where("archived", 1)->get();
         return $notes;
+    }
+    public function filterNotes($category_id){
+        $category =  Categories::findOrFail($category_id);
+
+        // Get all notes associated with the category
+        $notes = $category->notes;
+
+        // Return the notes in a JSON response
+        return response()->json(['status' => 200, 'data' => $notes], 200);
     }
 }
 

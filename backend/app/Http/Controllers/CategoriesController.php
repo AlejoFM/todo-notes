@@ -39,43 +39,48 @@ class CategoriesController extends Controller
         $result = ['status' => 200];
 
         try {
-            $result['data'] = $this->categoriesService->saveNotesData($data);
+            $result['data'] = $this->categoriesService->saveCategoriesData($data);
         }catch (Exception $e){
             $result = ['status' => 500, 'error' => $e->getMessage()];
         }
 
         return response()->json($result, $result['status']);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categories $categories)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categories $categories)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Categories $categories)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categories $categories)
+    public function destroy($category)
     {
-        //
+        $result = ['status' => 200, 'data' => "Deleted successfully"];
+
+        try {
+            $this->categoriesService->deleteCategories($category);
+        }catch (\Exception $e){
+            $result = ['status' => 500, 'error' => $e->getMessage()];
+        }
+        return response()->json($result, $result['status']);
+    }
+
+    public function addCategory($note_id, Request $request){
+        $data = ['note_data' => $note_id, 'category_data' => $request->only('category_id')];
+        $result = ['status' => 200, 'data' => "Category added successfully"];
+
+        try {
+            return response()->json($this->categoriesService->addCategories($data));
+        }catch (\Exception $e){
+            $result = ['status' => 500, 'error' => $e->getMessage()];
+        }
+        return response()->json($result, $result['status']);
+    }
+    public function removeCategory($note_id, Request $request){
+        $data = ['note_data' => $note_id, 'category_data' => $request->only('category_id')];
+        $result = ['status' => 200, 'data' => "Category added successfully"];
+
+        try {
+            return response()->json($this->categoriesService->addCategories($data));
+        }catch (\Exception $e){
+            $result = ['status' => 500, 'error' => $e->getMessage()];
+        }
+        return response()->json($result, $result['status']);
     }
 }

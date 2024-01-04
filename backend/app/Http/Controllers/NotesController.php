@@ -44,7 +44,7 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['title', 'content', 'category_id']);
+        $data = $request->only(['title', 'content', 'categories_id']);
 
         $result = ['status' => 200];
 
@@ -70,7 +70,7 @@ class NotesController extends Controller
      */
     public function update($notes, Request $request)
     {
-        $data = $request->only(['title', 'content']);
+        $data = $request->only(['title', 'content', 'categories_id']);
         $data['notes'] = $notes;
 
         $result = ['status' => 200];
@@ -145,4 +145,15 @@ class NotesController extends Controller
         return response()->json($result, $result['status']);
     }
 
+    public function filterNotes($category_id){
+        $result = ['status' => 200, 'data' => "notes listed successfully", 'info' => ''];
+
+        try {
+            $notes = $this->notesService->filterNotes($category_id);
+            $result['info'] = $notes;
+        }catch (Exception $e){
+            $result = ['status' => 500, 'error' => $e->getMessage()];
+        }
+        return response()->json($result, $result['status']);
+    }
 }

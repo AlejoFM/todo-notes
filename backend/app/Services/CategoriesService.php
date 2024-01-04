@@ -21,7 +21,7 @@ class CategoriesService{
     {
         $this->categoriesRepository = $categoriesRepository;
     }
-    public function saveNotesData($data){
+    public function saveCategoriesData($data){
         $validator = Validator::make($data, [
             'name' => 'required',
         ]);
@@ -30,6 +30,19 @@ class CategoriesService{
             throw new InvalidArgumentException($validator->errors()->first());
         }
         $result = $this->categoriesRepository->save($data);
+        return $result;
+    }
+    public function deleteCategories($category){
+        $result = $this->categoriesRepository->deleteCategory($category);
+        return $result;
+    }
+
+    public function addCategories($data){
+        $result = $this->categoriesRepository->addCategory($data);
+        return $result;
+    }
+    public function removeCategories($data){
+        $result = $this->categoriesRepository->removeCategory($data);
         return $result;
     }
 }

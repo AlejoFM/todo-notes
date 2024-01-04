@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Categories;
+use App\Models\Notes;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 
@@ -29,9 +30,36 @@ class CategoriesRepository{
         $categories = new $this->categories;
         $categories->name = $data['name'];
 
-
         $categories->save();
         return $categories->fresh();
+    }
+    public function deleteCategory($category){
+        $category = Categories::find($category);
+
+        if (!$category) {
+            throw new InvalidArgumentException('Category not found');
+        }
+        $category->delete();
+        return $category->fresh();
+    }
+
+    public function addCategory($data){
+        $note_id = $data['note_data'];
+        $category_id = $data['category_data'];
+        $note = Notes::findOrFail($note_id);
+        $note->categories()->attach($category_id);
+
+        return $note;
+
+    }
+    public function removeCategory($data){
+        $note_id = $data['note_data'];
+        $category_id = $data['category_data'];
+        $note = Notes::findOrFail($note_id);
+
+        $note->categories()->detach($category_id);
+
+        return $note;
     }
 }
 

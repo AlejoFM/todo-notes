@@ -22,10 +22,12 @@ Route::get('/', function () {
 
 Route::get('notes/active-notes', [NotesController::class, 'listActiveNotes'])->name("notes.listActive");
 Route::get('notes/unactive-notes', [NotesController::class, 'listUnActiveNotes'])->name("notes.listUnActive");
+Route::get('notes/filter-notes/{category}', [NotesController::class, 'filterNotes'])->name("notes.filter-notes");
+
 Route::post('notes/{id}/archive', [NotesController::class, 'archiveNote'])->name("notes.archive");
 Route::post('notes/{id}/unarchive', [NotesController::class, 'unArchiveNote'])->name("notes.unarchive");
 
-
+Route::post('notes/{id}/add-category', [CategoriesController::class, 'addCategory'])->name("notes.add-category");
 Route::resource('categories', CategoriesController::class);
 
 Route::resource('notes', NotesController::class);
