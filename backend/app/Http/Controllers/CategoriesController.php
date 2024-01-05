@@ -74,10 +74,10 @@ class CategoriesController extends Controller
     }
     public function removeCategory($note_id, Request $request){
         $data = ['note_data' => $note_id, 'category_data' => $request->only('category_id')];
-        $result = ['status' => 200, 'data' => "Category added successfully"];
+        $result = ['status' => 200, 'data' => "Category removed successfully"];
 
         try {
-            return response()->json($this->categoriesService->addCategories($data));
+            return response()->json($this->categoriesService->removeCategories($data));
         }catch (\Exception $e){
             $result = ['status' => 500, 'error' => $e->getMessage()];
         }

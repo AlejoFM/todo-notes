@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('content');
             $table->boolean('archived')->default(false);
-            $table->unsignedBigInteger('categories_id');
+            $table->unsignedBigInteger('categories_id')->default(0);
             $table->foreign('categories_id')->references('id')->on('categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

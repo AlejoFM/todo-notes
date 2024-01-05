@@ -28,6 +28,7 @@ Route::post('notes/{id}/archive', [NotesController::class, 'archiveNote'])->name
 Route::post('notes/{id}/unarchive', [NotesController::class, 'unArchiveNote'])->name("notes.unarchive");
 
 Route::post('notes/{id}/add-category', [CategoriesController::class, 'addCategory'])->name("notes.add-category");
+Route::delete('notes/{note_id}/remove-category', [CategoriesController::class, 'removeCategory'])->name("notes.remove-category");
 Route::resource('categories', CategoriesController::class);
 
 Route::resource('notes', NotesController::class);

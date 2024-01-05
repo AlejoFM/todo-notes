@@ -56,7 +56,6 @@ class CategoriesRepository{
         $note_id = $data['note_data'];
         $category_id = $data['category_data'];
         $note = Notes::findOrFail($note_id);
-
         $note->categories()->detach($category_id);
 
         return $note;

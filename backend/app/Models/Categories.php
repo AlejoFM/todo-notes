@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Categories extends Model
 {
     use HasFactory;
+    protected $fillable = ['name'];
 
     public function Notes(){
         return $this->belongsToMany(Notes::class,'note_category', 'category_id', 'notes_id');

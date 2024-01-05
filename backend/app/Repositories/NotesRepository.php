@@ -55,8 +55,8 @@ class NotesRepository{
         $notes->update();
         return $notes->fresh();
     }
-    public function deleteNote($data){
-        $notes = Notes::find($data['notes']);
+    public function deleteNote($note){
+        $notes = Notes::find($note);
 
         if (!$notes) {
             throw new InvalidArgumentException('Note not found');
@@ -96,13 +96,11 @@ class NotesRepository{
         return $notes;
     }
     public function filterNotes($category_id){
-        $category =  Categories::findOrFail($category_id);
+        $category =  Categories::find($category_id);
 
-        // Get all notes associated with the category
-        $notes = $category->notes;
+        $notes = $category->notes()->get();
 
-        // Return the notes in a JSON response
-        return response()->json(['status' => 200, 'data' => $notes], 200);
+        return $notes;
     }
 }
 

@@ -52,14 +52,8 @@ class NotesService{
         return $result;
 
     }
-    public function deleteNotes($data){
-        $validator = Validator::make($data, [
-            'notes' => 'required',
-        ]);
-        if ($validator->fails()){
-            throw new InvalidArgumentException($validator->errors()->first());
-        }
-        $result = $this->notesRepository->deleteNote($data);
+    public function deleteNotes($note){
+        $result = $this->notesRepository->deleteNote($note);
         return $result;
     }
     public function archiveNotes($note){
